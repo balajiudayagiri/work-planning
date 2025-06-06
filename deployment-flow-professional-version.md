@@ -2,6 +2,18 @@
 flowchart TD
 
 %% ================================
+%% 📦 Planning Phase
+%% ================================
+subgraph PLAN [📦 Planning Phase]
+    P1[📝 Define Project Scope]
+    P2[📅 Set Timeline]
+    P3[💰 Budget Allocation]
+    P4[👥 Team Assignment]
+
+    P1 --> P2 --> P3 --> P4
+end
+
+%% ================================
 %% 📦 Development Phase
 %% ================================
 subgraph DEV [📦 Development Phase]
@@ -72,5 +84,4 @@ subgraph POST [📝 Post Deployment]
 
     D6 --> E1 --> E2
 end
-
 ``` 
