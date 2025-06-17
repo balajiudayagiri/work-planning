@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - "docs/**"
+      - 'docs/**'
 
 jobs:
   sync-wiki:
@@ -14,28 +14,20 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v3
 
-      - name: Set up Git identity
+      - name: Configure Git
         run: |
-          git config --global user.email "balu.udy@gmail.com"
-          git config --global user.name "Balaji Udayagiri"
-
-      - name: Clear existing credentials
-        run: |
-          git config --global --unset credential.helper
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
 
       - name: Checkout Wiki repository
-        uses: actions/checkout@v3
-        with:
-          repository: ${{ github.repository }}.wiki
-          token: ${{ secrets.GH_PAT }}
-          path: wiki-repo
+        run: |
+          git clone https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}.wiki.git wiki-repo
 
       - name: Sync files
         run: |
-          echo "Syncing files from docs/ to wiki-repo/"
           rm -rf wiki-repo/*
           cp -r docs/* wiki-repo/
           cd wiki-repo
           git add .
           git commit -m "Sync docs to wiki on $(date +'%Y-%m-%d %H:%M:%S')" -a || echo "No changes to commit"
-          git push "https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}.wiki.git"
+          git push
