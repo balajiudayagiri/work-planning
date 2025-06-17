@@ -3,7 +3,7 @@ flowchart TD
 
 %% ================================
 %% 📦 Planning Phase
-%% ================================
+%% ================================ 
 subgraph PLAN [📦 Planning Phase]
     P1[📝 Define Project Scope]
     P2[📅 Set Timeline]
