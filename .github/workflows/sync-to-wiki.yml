@@ -16,8 +16,8 @@ jobs:
 
       - name: Set up Git identity
         run: |
-          git config --global user.email "balu.udy@gmail.com" # Replace with your email
-          git config --global user.name "balajiudayagiri" # Replace with your name
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
 
       - name: Checkout Wiki repository
         uses: actions/checkout@v3
@@ -26,12 +26,13 @@ jobs:
           token: ${{ secrets.GH_PAT }}
           path: wiki-repo
 
-      - name: Sync files
+      - name: Sync files to Wiki
         run: |
           echo "Syncing files from docs/ to wiki-repo/"
           rm -rf wiki-repo/*
           cp -r docs/* wiki-repo/
           cd wiki-repo
           git add .
-          git commit -m "Sync docs to wiki on $(date +'%Y-%m-%d %H:%M:%S')" -a || echo "No changes to commit"
-          git push
+          git commit -m "Sync docs to wiki on $(date +'%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
+          git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}.wiki.git
+          git push origin HEAD:master
