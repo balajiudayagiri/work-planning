@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - "docs/**"
+      - 'docs/**'
 
 jobs:
   sync-wiki:
@@ -16,15 +16,17 @@ jobs:
 
       - name: Set up Git identity
         run: |
-          git config --global user.email "balu.udy@gmail.com"
-          git config --global user.name "balajiudayagiri"
+          git config --global user.email "your-email@example.com" # Replace with your email
+          git config --global user.name "Your Name" # Replace with your name
+
+      - name: Deploy SSH key
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.WIKI_DEPLOY_KEY }}
 
       - name: Checkout Wiki repository
-        uses: actions/checkout@v3
-        with:
-          repository: ${{ github.repository }}.wiki
-          token: ${{ secrets.GH_PAT }}
-          path: wiki-repo
+        run: |
+          git clone git@github.com:${{ github.repository }}.wiki.git wiki-repo
 
       - name: Sync files
         run: |
@@ -34,4 +36,4 @@ jobs:
           cd wiki-repo
           git add .
           git commit -m "Sync docs to wiki on $(date +'%Y-%m-%d %H:%M:%S')" -a || echo "No changes to commit"
-          git push "https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}.wiki.git"
+          git push
