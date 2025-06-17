@@ -16,8 +16,8 @@ jobs:
 
       - name: Set up Git identity
         run: |
-          git config --global user.email "your-email@example.com" # Replace with your email
-          git config --global user.name "Your Name" # Replace with your name
+          git config --global user.email "balu.udy@gmail.com" # Replace with your email
+          git config --global user.name "balajiudayagiri" # Replace with your name
 
       - name: Checkout Wiki repository
         uses: actions/checkout@v3
